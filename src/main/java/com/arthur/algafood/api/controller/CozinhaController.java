@@ -34,9 +34,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 		@ResponseStatus(HttpStatus.OK)
 		@GetMapping("/{id}")
-		public Cozinha buscar(@PathVariable  Long id){
-			return cozinhaRepository.findById(id)
-					.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		public ResponseEntity<Cozinha> buscar(@PathVariable  Long id){
+			Optional<Cozinha> cozinhaBD = cozinhaRepository.findById(id);
+
+			if(cozinhaBD.isPresent()){
+				return ResponseEntity.ok().body(cozinhaBD.get());
+			}
+			return ResponseEntity.notFound().build();
 		}
 
 		@ResponseStatus(HttpStatus.CREATED)
@@ -49,11 +53,11 @@ import org.springframework.web.server.ResponseStatusException;
 		public ResponseEntity<Cozinha>atualizar(@RequestBody Cozinha cozinha,@PathVariable  Long id){
 			Optional<Cozinha> cozinhaBD = cozinhaRepository.findById(id);
 
-			if(!cozinhaBD.isEmpty()){
+			if(cozinhaBD.isPresent()){
 				BeanUtils.copyProperties(cozinha,cozinhaBD.get(),"id");
 
-				cozinhaRepository.save(cozinhaBD.get());
-				return ResponseEntity.ok().body(cozinhaBD.get());
+				Cozinha cozinhaSalva = cozinhaRepository.save(cozinhaBD.get());
+				return ResponseEntity.ok().body(cozinhaSalva);
 			}
 
 			return ResponseEntity.notFound().build();
