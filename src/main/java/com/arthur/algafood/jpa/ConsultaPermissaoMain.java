@@ -17,13 +17,9 @@ public class ConsultaPermissaoMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		PermissaoRepository permissaoRepository = applicationContext.getBean(PermissaoRepository.class);
+	
 		
-		List<Permissao> todasPermissoes = permissaoRepository.listar();
 		
-		for (Permissao permissao : todasPermissoes) {
-			System.out.printf("%s - %s\n", permissao.getNome(), permissao.getDescricao());
-		}
 	}
 	
 }

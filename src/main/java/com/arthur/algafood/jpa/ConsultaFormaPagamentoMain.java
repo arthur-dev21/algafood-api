@@ -16,14 +16,6 @@ public class ConsultaFormaPagamentoMain {
 		ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApiApplication.class)
 				.web(WebApplicationType.NONE)
 				.run(args);
-		
-		FormaPagamentoRepository formaPagamentoRepository = applicationContext.getBean(FormaPagamentoRepository.class);
-		
-		List<FormaPagamento> todasFormasPagamentos = formaPagamentoRepository.listar();
-		
-		for (FormaPagamento formaPagamento : todasFormasPagamentos) {
-			System.out.println(formaPagamento.getDescricao());
-		}
 	}
 	
 }
