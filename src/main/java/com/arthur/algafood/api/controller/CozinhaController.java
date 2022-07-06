@@ -34,13 +34,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 		@ResponseStatus(HttpStatus.OK)
 		@GetMapping("/{id}")
-		public ResponseEntity<Cozinha> buscar(@PathVariable  Long id){
-			Optional<Cozinha> cozinhaBD = cozinhaRepository.findById(id);
-
-			if(cozinhaBD.isPresent()){
-				return ResponseEntity.ok().body(cozinhaBD.get());
-			}
-			return ResponseEntity.notFound().build();
+		public Cozinha buscar(@PathVariable  Long id){
+			return  cadastroCozinhaService.buscarOuFalhar(id);
 		}
 
 		@ResponseStatus(HttpStatus.CREATED)
@@ -50,30 +45,18 @@ import org.springframework.web.server.ResponseStatusException;
 		}
 
 		@PutMapping("/{id}")
-		public ResponseEntity<Cozinha>atualizar(@RequestBody Cozinha cozinha,@PathVariable  Long id){
-			Optional<Cozinha> cozinhaBD = cozinhaRepository.findById(id);
+		public Cozinha atualizar(@RequestBody Cozinha cozinha,@PathVariable  Long id){
+			Cozinha cozinhaAtual = cadastroCozinhaService.buscarOuFalhar(id);
+			BeanUtils.copyProperties(cozinha,cozinhaAtual,"id");
 
-			if(cozinhaBD.isPresent()){
-				BeanUtils.copyProperties(cozinha,cozinhaBD.get(),"id");
-
-				Cozinha cozinhaSalva = cozinhaRepository.save(cozinhaBD.get());
-				return ResponseEntity.ok().body(cozinhaSalva);
-			}
-
-			return ResponseEntity.notFound().build();
+			return cozinhaRepository.save(cozinhaAtual);
 		}
 
+
 		@DeleteMapping("/{id}")
-		public ResponseEntity<Cozinha> remover(@PathVariable  Long id){
-			try{
-				cadastroCozinhaService.excluir(id);
-				return ResponseEntity.noContent().build();
-			}catch (EntidadeEmUsoException e){
-				return ResponseEntity.status(HttpStatus.CONFLICT).build();
-			}
-			catch (EntidadeNaoEncontradaException e){
-				return ResponseEntity.notFound().build();
-			}
+		@ResponseStatus(HttpStatus.NO_CONTENT)
+		public void remover(@PathVariable  Long id) {
+			cadastroCozinhaService.excluir(id);
 		}
 
 		
