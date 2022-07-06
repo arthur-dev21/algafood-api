@@ -1,6 +1,7 @@
 package com.arthur.algafood.domain.service;
 
 import com.arthur.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.arthur.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.arthur.algafood.domain.model.Cozinha;
 import com.arthur.algafood.domain.model.Restaurante;
 import com.arthur.algafood.domain.repository.CozinhaRepository;
@@ -24,8 +25,7 @@ public class CadastroRestauranteService {
 
     public Restaurante buscarOuFalhar(Long restauranteId) {
         return restauranteRepository.findById(restauranteId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
+                .orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));
     }
 
     public Restaurante salvar(Restaurante restaurante) {

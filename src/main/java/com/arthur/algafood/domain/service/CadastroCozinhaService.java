@@ -1,5 +1,6 @@
 package com.arthur.algafood.domain.service;
 
+import com.arthur.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.arthur.algafood.domain.exception.EntidadeEmUsoException;
 import com.arthur.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.arthur.algafood.domain.model.Cozinha;
@@ -24,22 +25,21 @@ public class CadastroCozinhaService {
         return cozinhaRepository.save(cozinha);
     }
 
-    public Cozinha buscarOuFalhar(Long id ){
-        return cozinhaRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        String.format(MSG_COZINHA_NAO_ENCONTRADA, id)));
+    public Cozinha buscarOuFalhar(Long cozinhaId) {
+        return cozinhaRepository.findById(cozinhaId)
+                .orElseThrow(() -> new CozinhaNaoEncontradaException(cozinhaId));
     }
 
-    public void excluir(Long cozinhaId){
-        try{
+    public void excluir(Long cozinhaId) {
+        try {
             cozinhaRepository.deleteById(cozinhaId);
-        }catch (DataIntegrityViolationException ex){
+
+        } catch (EmptyResultDataAccessException e) {
+            throw new CozinhaNaoEncontradaException(cozinhaId);
+
+        } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
-                    String.format(MSG_COZINHA_EM_USO,cozinhaId));
-        }
-        catch (EmptyResultDataAccessException ex){
-            throw new EntidadeNaoEncontradaException(
-                    String.format(MSG_COZINHA_NAO_ENCONTRADA , cozinhaId));
+                    String.format(MSG_COZINHA_EM_USO, cozinhaId));
         }
     }
 }

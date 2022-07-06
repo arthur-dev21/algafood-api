@@ -1,7 +1,8 @@
 package com.arthur.algafood.api.controller;
 
-import com.arthur.algafood.domain.exception.EntidadeEmUsoException;
+import com.arthur.algafood.api.exceptionhandler.Problema;
 import com.arthur.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.arthur.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.arthur.algafood.domain.exception.NegocioException;
 import com.arthur.algafood.domain.model.Cidade;
 import com.arthur.algafood.domain.repository.CidadeRepository;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequestMapping("/cidades")
@@ -38,8 +40,8 @@ public class CidadeController {
     public Cidade adicionar(@RequestBody Cidade cidade) {
         try{
             return cadastroCidade.salvar(cidade);
-        }catch (EntidadeNaoEncontradaException e){
-            throw new NegocioException(e.getMessage());
+        }catch (EstadoNaoEncontradoException e){
+            throw new NegocioException(e.getMessage() , e);
         }
 
     }
@@ -47,12 +49,12 @@ public class CidadeController {
     @PutMapping("/{cidadeId}")
     public Cidade atualizar(@PathVariable Long cidadeId,
                             @RequestBody Cidade cidade) {
-        Cidade cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
-        BeanUtils.copyProperties(cidade, cidadeAtual, "id");
         try{
+            Cidade cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
+            BeanUtils.copyProperties(cidade, cidadeAtual, "id");
             return cadastroCidade.salvar(cidadeAtual);
-        }catch (EntidadeNaoEncontradaException e){
-            throw new NegocioException(e.getMessage());
+        }catch (EstadoNaoEncontradoException e){
+            throw new NegocioException(e.getMessage() , e);
         }
     }
 
@@ -61,6 +63,7 @@ public class CidadeController {
     public void remover(@PathVariable Long cidadeId) {
         cadastroCidade.excluir(cidadeId);
     }
+
 
 
 }
