@@ -1,6 +1,6 @@
 package com.arthur.algafood.api.controller;
 
-import com.arthur.algafood.api.exceptionhandler.Problema;
+
 import com.arthur.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.arthur.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.arthur.algafood.domain.exception.NegocioException;
