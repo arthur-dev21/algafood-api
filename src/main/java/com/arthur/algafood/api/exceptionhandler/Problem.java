@@ -19,13 +19,13 @@ public class Problem {
     private String title;
     private String detail;
     private String userMessage;
-    private List<Field>fields;
+    private List<Object>objects;
 
 
     @Builder
     @Getter
     @Setter
-    public static class Field{
+    public static class Object{
         private String name;
         private String userMessage;
     }

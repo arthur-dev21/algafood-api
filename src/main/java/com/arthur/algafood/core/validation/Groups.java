@@ -1,4 +1,4 @@
-package com.arthur.algafood;
+package com.arthur.algafood.core.validation;
 
 public interface Groups {
 

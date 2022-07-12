@@ -7,21 +7,22 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 
-import com.arthur.algafood.Groups;
+import com.arthur.algafood.core.validation.Groups;
+import com.arthur.algafood.core.validation.TaxaFrete;
+import com.arthur.algafood.core.validation.ValorZeroIncluiDescricao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 
 import org.hibernate.annotations.UpdateTimestamp;
+
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -33,12 +34,13 @@ public class Restaurante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message = "Nome obrigatorio")
+	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 
+    @TaxaFrete
+	@NotNull
 	@PositiveOrZero
-	@DecimalMin("1")
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
