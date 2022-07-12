@@ -17,6 +17,8 @@ import com.arthur.algafood.domain.model.Cozinha;
 import com.arthur.algafood.domain.repository.CozinhaRepository;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+
 @RestController
 	@RequestMapping("/cozinhas")
 	public class CozinhaController {
@@ -40,12 +42,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 		@ResponseStatus(HttpStatus.CREATED)
 		@PostMapping
-		public Cozinha salvar(@RequestBody Cozinha cozinha){
+		public Cozinha salvar(@RequestBody @Valid Cozinha cozinha){
 			return cadastroCozinhaService.salvar(cozinha);
 		}
 
 		@PutMapping("/{id}")
-		public Cozinha atualizar(@RequestBody Cozinha cozinha,@PathVariable  Long id){
+		public Cozinha atualizar(@RequestBody @Valid Cozinha cozinha,@PathVariable  Long id){
 			Cozinha cozinhaAtual = cadastroCozinhaService.buscarOuFalhar(id);
 			BeanUtils.copyProperties(cozinha,cozinhaAtual,"id");
 
