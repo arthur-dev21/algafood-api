@@ -12,6 +12,8 @@ import com.arthur.algafood.domain.model.Cidade;
 import com.arthur.algafood.domain.model.Estado;
 import com.arthur.algafood.domain.repository.CidadeRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class CadastroCidadeService {
 
@@ -32,7 +34,7 @@ public class CadastroCidadeService {
         return cidadeRepository.findById(cidadeId)
                 .orElseThrow(() -> new CidadeNaoEncontradaException(cidadeId));
     }
-
+    @Transactional
     public Cidade salvar(Cidade cidade) {
         Long estadoId = cidade.getEstado().getId();
         Estado estado = cadastroEstado.buscarOuFalhar(estadoId);
@@ -40,7 +42,7 @@ public class CadastroCidadeService {
 
         return cidadeRepository.save(cidade);
     }
-
+    @Transactional
     public void excluir(Long cidadeId) {
         try {
             cidadeRepository.deleteById(cidadeId);

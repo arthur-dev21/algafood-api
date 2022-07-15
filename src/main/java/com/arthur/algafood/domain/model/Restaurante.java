@@ -2,6 +2,7 @@ package com.arthur.algafood.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +16,6 @@ import javax.validation.groups.Default;
 
 import com.arthur.algafood.core.validation.Groups;
 import com.arthur.algafood.core.validation.TaxaFrete;
-import com.arthur.algafood.core.validation.ValorZeroIncluiDescricao;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -44,37 +43,36 @@ public class Restaurante {
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
+
 	@Valid
 	@NotNull
 	@ConvertGroup(from = Default.class , to =  Groups.CozinhaId.class)
-	//@JsonIgnore
-	//@JsonIgnoreProperties({"hibernateLazyInitializer"})
-	@ManyToOne(fetch = FetchType.LAZY)
+		@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;
 
-	@JsonIgnore
+
 	@Embedded
 	private Endereco endereco;
 
-	@JsonIgnore
+
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
-	private LocalDateTime dataCadastro;
+	private OffsetDateTime dataCadastro;
 
-	@JsonIgnore
+
 	@UpdateTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
-	private LocalDateTime dataAtualizacao;
+	private OffsetDateTime dataAtualizacao;
 
-	//@JsonIgnore
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "restaurante_forma_pagamento",
 	          joinColumns = @JoinColumn(name = "restaurante_id"),
 	          inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private List<FormaPagamento>formasPagamento  = new ArrayList<>();
 
-	@JsonIgnore
+
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
 
