@@ -1,18 +1,14 @@
 package com.arthur.algafood.api.controller;
 
-import com.arthur.algafood.api.assembler.EstadoInputDisassembler;
+import com.arthur.algafood.api.assembler.disassembler.EstadoInputDisassembler;
 import com.arthur.algafood.api.assembler.EstadoModelAssembler;
 import com.arthur.algafood.api.model.EstadoModel;
 import com.arthur.algafood.api.model.input.EstadoInput;
-import com.arthur.algafood.domain.exception.EntidadeEmUsoException;
-import com.arthur.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.arthur.algafood.domain.model.Estado;
 import com.arthur.algafood.domain.repository.EstadoRepository;
 import com.arthur.algafood.domain.service.CadastroEstadoService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

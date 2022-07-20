@@ -1,6 +1,6 @@
 package com.arthur.algafood.api.controller;
 
-import com.arthur.algafood.api.assembler.FormaPagamentoInputDisassembler;
+import com.arthur.algafood.api.assembler.disassembler.FormaPagamentoInputDisassembler;
 import com.arthur.algafood.api.assembler.FormaPagamentoModelAssembler;
 import com.arthur.algafood.api.model.FormaPagamentoModel;
 import com.arthur.algafood.api.model.input.*;

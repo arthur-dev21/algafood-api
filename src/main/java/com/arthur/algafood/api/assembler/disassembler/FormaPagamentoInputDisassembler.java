@@ -1,4 +1,4 @@
-package com.arthur.algafood.api.assembler;
+package com.arthur.algafood.api.assembler.disassembler;
 
 
 import com.arthur.algafood.api.model.input.FormaPagamentoInput;

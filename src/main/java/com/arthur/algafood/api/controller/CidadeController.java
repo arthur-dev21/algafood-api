@@ -1,24 +1,20 @@
 package com.arthur.algafood.api.controller;
 
 
-import com.arthur.algafood.api.assembler.CidadeInputDisassembler;
+import com.arthur.algafood.api.assembler.disassembler.CidadeInputDisassembler;
 import com.arthur.algafood.api.assembler.CidadeModelAssembler;
 import com.arthur.algafood.api.model.CidadeModel;
 import com.arthur.algafood.api.model.input.CidadeInput;
-import com.arthur.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.arthur.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.arthur.algafood.domain.exception.NegocioException;
 import com.arthur.algafood.domain.model.Cidade;
 import com.arthur.algafood.domain.repository.CidadeRepository;
 import com.arthur.algafood.domain.service.CadastroCidadeService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequestMapping("/cidades")

@@ -19,7 +19,7 @@ public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID>
 
         this.manager = entityManager;
     }
-
+/*
     @Override
     public Optional<T> buscarPrimeiro() {
         var jpql = "from " + getDomainClass().getName();
@@ -31,4 +31,5 @@ public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID>
         return Optional.ofNullable(entity);
     }
 
+*/
 }

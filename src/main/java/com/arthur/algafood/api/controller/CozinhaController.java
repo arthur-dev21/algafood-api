@@ -1,25 +1,18 @@
 package com.arthur.algafood.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.arthur.algafood.api.assembler.CozinhaInputDisassembler;
+import com.arthur.algafood.api.assembler.disassembler.CozinhaInputDisassembler;
 import com.arthur.algafood.api.assembler.CozinhaModelAssembler;
 import com.arthur.algafood.api.model.CozinhaModel;
 import com.arthur.algafood.api.model.input.CozinhaInput;
-import com.arthur.algafood.domain.exception.EntidadeEmUsoException;
-import com.arthur.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.arthur.algafood.domain.service.CadastroCozinhaService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.arthur.algafood.domain.model.Cozinha;
 import com.arthur.algafood.domain.repository.CozinhaRepository;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
