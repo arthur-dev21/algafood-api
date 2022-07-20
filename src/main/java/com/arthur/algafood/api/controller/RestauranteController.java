@@ -6,8 +6,7 @@ import com.arthur.algafood.api.model.CozinhaModel;
 import com.arthur.algafood.api.model.RestauranteModel;
 import com.arthur.algafood.api.model.input.RestauranteInput;
 import com.arthur.algafood.core.validation.ValidacaoException;
-import com.arthur.algafood.domain.exception.CozinhaNaoEncontradaException;
-import com.arthur.algafood.domain.exception.NegocioException;
+import com.arthur.algafood.domain.exception.*;
 import com.arthur.algafood.domain.model.Cozinha;
 import com.arthur.algafood.domain.model.Restaurante;
 import com.arthur.algafood.domain.repository.RestauranteRepository;
@@ -68,7 +67,7 @@ public class RestauranteController {
             Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
 
             return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
-        } catch (CozinhaNaoEncontradaException e) {
+        } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
     }
@@ -82,9 +81,23 @@ public class RestauranteController {
             restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
 
             return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
-        } catch (CozinhaNaoEncontradaException e) {
+        } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
+    }
+    // PUT  / restaurantes/{id}/ativo
+    // DELETE  / restaurantes/{id}/inativar
+
+    @PutMapping("/{restauranteId}/ativo")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativar(@PathVariable Long restauranteId){
+        cadastroRestaurante.ativar(restauranteId);
+    }
+
+    @DeleteMapping("/{restauranteId}/ativo")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativar(@PathVariable Long restauranteId){
+        cadastroRestaurante.inativar(restauranteId);
     }
 
 

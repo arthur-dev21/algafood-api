@@ -2,8 +2,7 @@ package com.arthur.algafood.domain.service;
 
 import com.arthur.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.arthur.algafood.domain.exception.RestauranteNaoEncontradoException;
-import com.arthur.algafood.domain.model.Cozinha;
-import com.arthur.algafood.domain.model.Restaurante;
+import com.arthur.algafood.domain.model.*;
 import com.arthur.algafood.domain.repository.CozinhaRepository;
 import com.arthur.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,9 @@ public class CadastroRestauranteService {
     @Autowired
     private CadastroCozinhaService cadastroCozinha;
 
+    @Autowired
+    private CadastroCidadeService cadastroCidade;
+
 
     public Restaurante buscarOuFalhar(Long restauranteId) {
         return restauranteRepository.findById(restauranteId)
@@ -32,11 +34,30 @@ public class CadastroRestauranteService {
     @Transactional
     public Restaurante salvar(Restaurante restaurante) {
         Long cozinhaId = restaurante.getCozinha().getId();
+        Long cidadeId = restaurante.getEndereco().getCidade().getId();
 
         Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
+        Cidade cidade = cadastroCidade.buscarOuFalhar(cidadeId);
 
         restaurante.setCozinha(cozinha);
+        restaurante.getEndereco().setCidade(cidade);
 
         return restauranteRepository.save(restaurante);
+    }
+
+    @Transactional
+    public void ativar(Long restauranteId){
+        Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+        restauranteAtual.ativar();
+        // nao precisa porque quando acionamos o buscarefalahr a instancia
+        // fica em contexto gerenciavel entao qualquer alteraçao sera sicronixada
+    }
+
+    @Transactional
+    public void inativar(Long restauranteId){
+        Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+        restauranteAtual.inativar();
+        // nao precisa porque quando acionamos o buscarefalahr a instancia
+        // fica em contexto gerenciavel entao qualquer alteraçao sera sicronixada
     }
 }
