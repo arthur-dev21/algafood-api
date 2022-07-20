@@ -1,4 +1,4 @@
-package com.arthur.algafood.api.model.input;
+package com.arthur.algafood.api.model;
 
 import com.arthur.algafood.api.model.*;
 import lombok.*;
@@ -11,7 +11,7 @@ import java.util.*;
 @Getter
 public class PedidoModel {
 
-    private Long id;
+    private String codigo;
     private BigDecimal subtotal;
     private BigDecimal taxaFrete;
     private BigDecimal valorTotal;

@@ -1,6 +1,7 @@
 package com.arthur.algafood.core.modelmapper;
 
 import com.arthur.algafood.api.model.*;
+import com.arthur.algafood.api.model.input.*;
 import com.arthur.algafood.domain.model.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,9 @@ public class ModelMapperConfig {
         enderecoToEnderecoModelTypeMap.<String>addMapping(
                 enderecoSrc -> enderecoSrc.getCidade().getEstado().getNome(),
                 (enderecoModelDest, value) -> enderecoModelDest.getCidade().setEstado(value));
+
+        modelMapper.createTypeMap(ItemPedidoInput.class, ItemPedido.class)
+                .addMappings(mapper -> mapper.skip(ItemPedido::setId));
 
         return modelMapper;
     }
