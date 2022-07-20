@@ -10,18 +10,18 @@ import java.util.*;
 import java.util.stream.*;
 
 @Component
-public class UsuarioModelAssembler {
+public class ProdutoModelAssembler {
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public UsuarioModel toModel(Usuario usuario) {
-        return modelMapper.map(usuario, UsuarioModel.class);
+    public ProdutoModel toModel(Produto produto) {
+        return modelMapper.map(produto, ProdutoModel.class);
     }
 
-    public List<UsuarioModel> toCollectionModel(Collection<Usuario> usuarios) {
-        return usuarios.stream()
-                .map(usuario -> toModel(usuario))
+    public List<ProdutoModel> toCollectionModel(List<Produto> produtos) {
+        return produtos.stream()
+                .map(produto -> toModel(produto))
                 .collect(Collectors.toList());
     }
 }

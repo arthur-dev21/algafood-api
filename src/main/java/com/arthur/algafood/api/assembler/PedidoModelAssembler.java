@@ -1,6 +1,6 @@
 package com.arthur.algafood.api.assembler;
 
-import com.arthur.algafood.api.model.*;
+import com.arthur.algafood.api.model.input.*;
 import com.arthur.algafood.domain.model.*;
 import org.modelmapper.*;
 import org.springframework.beans.factory.annotation.*;
@@ -10,18 +10,19 @@ import java.util.*;
 import java.util.stream.*;
 
 @Component
-public class UsuarioModelAssembler {
+public class PedidoModelAssembler {
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public UsuarioModel toModel(Usuario usuario) {
-        return modelMapper.map(usuario, UsuarioModel.class);
+    public PedidoModel toModel(Pedido pedido) {
+        return modelMapper.map(pedido, PedidoModel.class);
     }
 
-    public List<UsuarioModel> toCollectionModel(Collection<Usuario> usuarios) {
-        return usuarios.stream()
-                .map(usuario -> toModel(usuario))
+    public List<PedidoModel> toCollectionModel(List<Pedido> pedidos) {
+        return pedidos.stream()
+                .map(pedido -> toModel(pedido))
                 .collect(Collectors.toList());
     }
+
 }

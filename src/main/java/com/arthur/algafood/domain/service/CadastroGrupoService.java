@@ -12,6 +12,9 @@ import javax.transaction.*;
 @Service
 public class CadastroGrupoService {
 
+    @Autowired
+    private CadastroPermissaoService cadastroPermissao;
+
     private static final String MSG_GRUPO_EM_USO
             = "Grupo de código %d não pode ser removido, pois está em uso";
 
@@ -41,5 +44,21 @@ public class CadastroGrupoService {
     public Grupo buscarOuFalhar(Long grupoId) {
         return grupoRepository.findById(grupoId)
                 .orElseThrow(() -> new GrupoNaoEncontradoException(grupoId));
+    }
+
+    @Transactional
+    public void desassociarPermissao(Long grupoId, Long permissaoId) {
+        Grupo grupo = buscarOuFalhar(grupoId);
+        Permissao permissao = cadastroPermissao.buscarOuFalhar(permissaoId);
+
+        grupo.removerPermissao(permissao);
+    }
+
+    @Transactional
+    public void associarPermissao(Long grupoId, Long permissaoId) {
+        Grupo grupo = buscarOuFalhar(grupoId);
+        Permissao permissao = cadastroPermissao.buscarOuFalhar(permissaoId);
+
+        grupo.adicionarPermissao(permissao);
     }
 }

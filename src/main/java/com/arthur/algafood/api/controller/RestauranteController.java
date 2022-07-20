@@ -78,13 +78,41 @@ public class RestauranteController {
         cadastroRestaurante.ativar(restauranteId);
     }
 
+    @PutMapping("/ativacoes")
+    public void ativarMultiplos(@RequestBody List<Long> restaurantesIds){
+        try{
+            cadastroRestaurante.ativar(restaurantesIds);
+        }catch (RestauranteNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(),e);
+        }
+
+    }
+    @DeleteMapping("/ativacoes")
+    public void inativarMultiplos(@RequestBody List<Long> restaurantesIds){
+        try{
+            cadastroRestaurante.inativar(restaurantesIds);
+        }catch (RestauranteNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(),e);
+        }
+    }
+
     @DeleteMapping("/{restauranteId}/ativo")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void inativar(@PathVariable Long restauranteId){
         cadastroRestaurante.inativar(restauranteId);
     }
 
+    @PutMapping("/{restauranteId}/abertura")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void abrir(@PathVariable Long restauranteId) {
+        cadastroRestaurante.abrir(restauranteId);
+    }
 
+    @PutMapping("/{restauranteId}/fechamento")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void fechar(@PathVariable Long restauranteId) {
+        cadastroRestaurante.fechar(restauranteId);
+    }
 
 
 
